@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miqueias M - Full Stack Developer & AI Specialist</title>
+    <meta name="description" content="Expert in AI assistants, chatbots and modern web solutions. Transform your business with intelligent automation and cutting-edge technology.">
+    <meta name="keywords" content="AI developer, chatbot development, WhatsApp automation, web development, React developer, Node.js, OpenAI integration">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Miqueias M - Full Stack Developer & AI Specialist">
+    <meta property="og:description" content="Expert in AI assistants, chatbots and modern web solutions. Transform your business with intelligent automation and cutting-edge technology.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Miqueias M - Full Stack Developer & AI Specialist">
+    <meta property="twitter:description" content="Expert in AI assistants, chatbots and modern web solutions. Transform your business with intelligent automation and cutting-edge technology.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+    
+    <!-- External Libraries -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #22c55e;
+            border-radius: 0;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #16a34a;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { ChevronDown, Code, Bot, Smartphone, Globe, Users, Zap, CheckCircle, ArrowRight, Github, Linkedin, Mail, Star } = lucide;
+
+        // SEO and Meta Component
+        const SEOHead = ({ language }) => {
+          const seoData = {
+            en: {
+              title: "Miqueias M - Full Stack Developer & AI Specialist",
+              description: "Expert in AI assistants, chatbots and modern web solutions. Transform your business with intelligent automation and cutting-edge technology.",
+              keywords: "AI developer, chatbot development, WhatsApp automation, web development, React developer, Node.js, OpenAI integration"
+            },
+            pt: {
+              title: "Miqueias M - Desenvolvedor Full Stack & Especialista IA", 
+              description: "Especialista em assistentes de IA, chatbots e soluções web modernas. Transforme seu negócio com automação inteligente e tecnologia de ponta.",
+              keywords: "desenvolvedor IA, desenvolvimento chatbot, automação WhatsApp, desenvolvimento web, desenvolvedor React, Node.js, integração OpenAI"
+            }
+          };
+
+          useEffect(() => {
+            const current = seoData[language];
+            document.title = current.title;
+            
+            // Update or create meta tags
+            const updateMeta = (name, content) => {
+              let meta = document.querySelector(`meta[name="${name}"]`) || document.querySelector(`meta[property="${name}"]`);
+              if (!meta) {
+                meta = document.createElement('meta');
+                meta.setAttribute(name.startsWith('og:') ? 'property' : 'name', name);
+                document.head.appendChild(meta);
+              }
+              meta.setAttribute('content', content);
+            };
+
+            updateMeta('description', current.description);
+            updateMeta('keywords', current.keywords);
+            updateMeta('og:title', current.title);
+            updateMeta('og:description', current.description);
+            updateMeta('og:type', 'website');
+            updateMeta('twitter:card', 'summary_large_image');
+            updateMeta('twitter:title', current.title);
+            updateMeta('twitter:description', current.description);
+          }, [language]);
+
+          return null;
+        };
+
+        const Portfolio = () => {
+          const [activeSection, setActiveSection] = useState(0);
+          const [isVisible, setIsVisible] = useState({});
+          const [isLoading, setIsLoading] = useState(true);
+          const [loadingProgress, setLoadingProgress] = useState(0);
+          const [loadingText, setLoadingText] = useState('');
+          const [language, setLanguage] = useState('en'); // Default English
+          
+          const loadingMessages = {
+            en: [
+              'Initializing system...',
+              'Loading AI modules...',
+              'Connecting APIs...',
+              'Optimizing performance...',
+              'Preparing portfolio...',
+              'System ready!'
+            ],
+            pt: [
+              'Inicializando sistema...',
+              'Carregando módulos de IA...',
+              'Conectando APIs...',
+              'Otimizando performance...',
+              'Preparando portfólio...',
+              'Sistema pronto!'
+            ]
+          };
+
+          const content = {
+            en: {
+              nav: ['HOME', 'ABOUT', 'SERVICES', 'PORTFOLIO', 'CONTACT'],
+              hero: {
+                subtitle: 'root@miqueias:~$ whoami',
+                title: ['TRANSFORM', '1DEAS_1NT0', 'S0LUT10NS'],
+                description: '> Expert in developing AI_assistants, intelligent_chatbots and modern_web_solutions that automate and elevate your business to the next level.',
+                buttons: ['[EXECUTE_PORTFOLIO]', '[START_CONTACT]'],
+                stats: [
+                  { value: '003+', label: 'years_experience' },
+                  { value: '050+', label: 'projects_delivered' },
+                  { value: '100%', label: 'client_satisfaction' }
+                ]
+              },
+              about: {
+                title: '[ABOUT_ME]',
+                paragraphs: [
+                  '> I am an ethical_hacker and junior developer passionate about creating intelligent and functional solutions. Specialized in projects involving Artificial_Intelligence, automations for WhatsApp, Telegram and Instagram, plus development of modern applications and systems.',
+                  '> I work with cutting-edge technologies like OpenAI, MongoDB, React and Node.js, always focused on delivering agile and high-quality solutions that really make a difference for my clients.'
+                ],
+                skills: [
+                  { title: 'languages:', content: 'JavaScript, Python, TypeScript' },
+                  { title: 'specialties:', content: 'AI, Chatbots, Automation' },
+                  { title: 'frameworks:', content: 'React, Next.js, Node.js' },
+                  { title: 'tools:', content: 'MongoDB, OpenAI, Supabase' }
+                ],
+                card: {
+                  title: '[FULL_STACK_DEV]',
+                  subtitle: 'Creating_the_future();\none_line_at_a_time;'
+                }
+              },
+              services: {
+                title: '[SERVICES]',
+                subtitle: '> Complete and personalized solutions to automate and modernize your business',
+                items: [
+                  {
+                    title: 'INTELLIGENT_AI_ASSISTANTS',
+                    description: 'Advanced chatbots with RAG, CRM integration and complete automation for WhatsApp, Telegram and websites.',
+                    features: ['RAG Technology', 'Multi-platform', 'CRM Integration', '24/7 Available']
+                  },
+                  {
+                    title: 'MODERN_WEB_DEVELOPMENT',
+                    description: 'Responsive websites, web apps and landing pages focused on conversion and user experience.',
+                    features: ['React/Next.js', 'Responsive Design', 'SEO Optimized', 'Performance']
+                  },
+                  {
+                    title: 'SOFTWARE_&_AUTOMATIONS',
+                    description: 'Custom solutions, APIs, integrations and automations to optimize business processes.',
+                    features: ['RESTful APIs', 'Integrations', 'Automation', 'Scalability']
+                  }
+                ]
+              },
+              portfolio: {
+                title: '[PORTFOLIO]',
+                subtitle: '> Real projects that demonstrate my ability to create innovative solutions',
+                projects: [
+                  {
+                    title: 'WhatsApp Business Bot',
+                    category: 'Chatbot',
+                    description: 'Intelligent assistant for customer service with automated responses, order tracking and CRM integration.',
+                    tech: ['Node.js', 'WhatsApp API', 'OpenAI GPT', 'MongoDB'],
+                    metrics: '↑90% response efficiency',
+                    placeholder: 'whatsapp',
+                    demoUrl: '#', 
+                    codeUrl: '#'
+                  },
+                  {
+                    title: 'E-commerce Dashboard',
+                    category: 'Web App', 
+                    description: 'Modern admin panel with real-time analytics, inventory management and sales tracking.',
+                    tech: ['React', 'Next.js', 'Chart.js', 'PostgreSQL'],
+                    metrics: '↑75% admin productivity',
+                    placeholder: 'dashboard',
+                    demoUrl: '#',
+                    codeUrl: '#'
+                  },
+                  {
+                    title: 'Appointment System',
+                    category: 'Software',
+                    description: 'Complete booking system with AI scheduling, SMS reminders and calendar integration.',
+                    tech: ['Python', 'FastAPI', 'React', 'AI Integration'],
+                    metrics: '↑60% booking conversion',
+                    placeholder: 'appointment',
+                    demoUrl: '#',
+                    codeUrl: '#'
+                  }
+                ],
+                button: '[VIEW_ALL_PROJECTS]'
+              },
+              contact: {
+                title: '[CONTACT]',
+                subtitle: '> Ready to transform your idea into reality? Let\'s create something incredible together!',
+                form: {
+                  title: '[CONNECT_WITH_ME]',
+                  fields: [
+                    { label: 'email:', value: 'contatomiqueiasdev@gmail.com', link: 'mailto:contatomiqueiasdev@gmail.com' },
+                    { label: 'whatsapp:', value: '+55 (73) 99806-5048', link: 'https://wa.me/5573998065048?text=Hello! I saw your portfolio and would like to discuss a project.' },
+                    { label: 'location:', value: 'São Paulo, BR' }
+                  ],
+                  quote: {
+                    title: '[REQUEST_QUOTE]',
+                    placeholders: ['your_name', 'your_email', 'describe_your_project...'],
+                    options: ['project_type', 'ai_assistant_chatbot', 'website_webapp', 'software_automation', 'other'],
+                    button: '[SEND_MESSAGE]'
+                  }
+                }
+              },
+              footer: '© 2025 [MIQUEIAS_M] - All rights reserved. Developed with <3 and lots of coffee.'
+            },
+            pt: {
+              nav: ['INÍCIO', 'SOBRE', 'SERVIÇOS', 'PORTFÓLIO', 'CONTATO'],
+              hero: {
+                subtitle: 'root@miqueias:~$ whoami',
+                title: ['TRANSFORM0', '1DE1AS_EM', 'S0LUÇ0ES'],
+                description: '> Especialista em desenvolvimento de assistentes_de_IA, chatbots_inteligentes e soluções_web_modernas que automatizam e elevam seu negócio ao próximo nível.',
+                buttons: ['[EXECUTAR_PORTFOLIO]', '[INICIAR_CONTATO]'],
+                stats: [
+                  { value: '003+', label: 'anos_experiencia' },
+                  { value: '050+', label: 'projetos_entregues' },
+                  { value: '100%', label: 'satisfacao_cliente' }
+                ]
+              },
+              about: {
+                title: '[SOBRE_MIM]',
+                paragraphs: [
+                  '> Sou um hacker_ético e desenvolvedor júnior apaixonado por criar soluções inteligentes e funcionais. Especializado em projetos que envolvem Inteligência_Artificial, automações para WhatsApp, Telegram e Instagram, além de desenvolvimento de aplicações e sistemas modernos.',
+                  '> Trabalho com tecnologias de ponta como OpenAI, MongoDB, React e Node.js, sempre focado em entregar soluções ágeis e de alta qualidade que realmente fazem a diferença para meus clientes.'
+                ],
+                skills: [
+                  { title: 'linguagens:', content: 'JavaScript, Python, TypeScript' },
+                  { title: 'especialidades:', content: 'IA, Chatbots, Automação' },
+                  { title: 'frameworks:', content: 'React, Next.js, Node.js' },
+                  { title: 'ferramentas:', content: 'MongoDB, OpenAI, Supabase' }
+                ],
+                card: {
+                  title: '[DESENVOLVEDOR_FULL_STACK]',
+                  subtitle: 'Criando_o_futuro();\numa_linha_por_vez;'
+                }
+              },
+              services: {
+                title: '[SERVIÇOS]',
+                subtitle: '> Soluções completas e personalizadas para automatizar e modernizar seu negócio',
+                items: [
+                  {
+                    title: 'ASSISTENTES_IA_INTELIGENTES',
+                    description: 'Chatbots avançados com RAG, integração CRM e automação completa para WhatsApp, Telegram e websites.',
+                    features: ['Tecnologia RAG', 'Multi-plataforma', 'Integração CRM', 'Disponível 24/7']
+                  },
+                  {
+                    title: 'DESENVOLVIMENTO_WEB_MODERNO',
+                    description: 'Sites responsivos, apps web e landing pages com foco em conversão e experiência do usuário.',
+                    features: ['React/Next.js', 'Design Responsivo', 'SEO Otimizado', 'Performance']
+                  },
+                  {
+                    title: 'SOFTWARE_E_AUTOMAÇÕES',
+                    description: 'Soluções personalizadas, APIs, integrações e automações para otimizar processos de negócio.',
+                    features: ['APIs RESTful', 'Integrações', 'Automação', 'Escalabilidade']
+                  }
+                ]
+              },
+              portfolio: {
+                title: '[PORTFÓLIO]',
+                subtitle: '> Projetos reais que demonstram minha capacidade de criar soluções inovadoras',
+                projects: [
+                  {
+                    title: 'Bot WhatsApp Business',
+                    category: 'Chatbot',
+                    description: 'Assistente inteligente para atendimento ao cliente com respostas automatizadas, rastreamento de pedidos e integração CRM.',
+                    tech: ['Node.js', 'WhatsApp API', 'OpenAI GPT', 'MongoDB'],
+                    metrics: '↑90% eficiência de resposta',
+                    placeholder: 'whatsapp',
+                    demoUrl: '#',
+                    codeUrl: '#'
+                  },
+                  {
+                    title: 'Dashboard E-commerce',
+                    category: 'Web App',
+                    description: 'Painel administrativo moderno com analytics em tempo real, gestão de estoque e acompanhamento de vendas.',
+                    tech: ['React', 'Next.js', 'Chart.js', 'PostgreSQL'],
+                    metrics: '↑75% produtividade admin',
+                    placeholder: 'dashboard',
+                    demoUrl: '#',
+                    codeUrl: '#'
+                  },
+                  {
+                    title: 'Sistema de Agendamento',
+                    category: 'Software',
+                    description: 'Sistema completo de reservas com agendamento IA, lembretes SMS e integração com calendário.',
+                    tech: ['Python', 'FastAPI', 'React', 'Integração IA'],
+                    metrics: '↑60% conversão de reservas',
+                    placeholder: 'appointment',
+                    demoUrl: '#',
+                    codeUrl: '#'
+                  }
+                ],
+                button: '[VER_TODOS_PROJETOS]'
+              },
+              contact: {
+                title: '[CONTATO]',
+                subtitle: '> Pronto para transformar sua ideia em realidade? Vamos criar algo incrível juntos!',
+                form: {
+                  title: '[CONECTE_COMIGO]',
+                  fields: [
+                    { label: 'email:', value: 'contatomiqueiasdev@gmail.com', link: 'mailto:contatomiqueiasdev@gmail.com' },
+                    { label: 'whatsapp:', value: '+55 (73) 99806-5048', link: 'https://wa.me/5573998065048?text=Olá! Vi seu portfólio e gostaria de conversar sobre um projeto.' },
+                    { label: 'localização:', value: 'São Paulo, BR' }
+                  ],
+                  quote: {
+                    title: '[SOLICITAR_ORÇAMENTO]',
+                    placeholders: ['seu_nome', 'seu_email', 'descreva_seu_projeto...'],
+                    options: ['tipo_projeto', 'assistente_ia_chatbot', 'website_webapp', 'software_automacao', 'outro'],
+                    button: '[ENVIAR_MENSAGEM]'
+                  }
+                }
+              },
+              footer: '© 2025 [MIQUEIAS_M] - Todos os direitos reservados. Desenvolvido com <3 e muito café.'
+            }
+          };
+
+          const currentContent = content[language];
+          const currentLoadingMessages = loadingMessages[language];
+
+          const createProjectPlaceholder = (type, category) => {
+            const placeholders = {
+              whatsapp: (
+                React.createElement('div', {className: "w-full h-full bg-gradient-to-br from-green-600 to-emerald-700 relative overflow-hidden"}, [
+                  React.createElement('div', {className: "absolute inset-0 bg-black/20", key: "bg"}),
+                  React.createElement('div', {className: "absolute top-4 left-4 w-8 h-8 bg-white/20 rounded-full", key: "avatar"}),
+                  React.createElement('div', {className: "absolute top-4 right-4 w-6 h-6 bg-white/15 rounded", key: "menu"}),
+                  React.createElement('div', {className: "absolute bottom-8 left-4 right-4", key: "messages"}, [
+                    React.createElement('div', {className: "bg-white/10 rounded-lg p-3 mb-2", key: "msg1"}, [
+                      React.createElement('div', {className: "w-3/4 h-2 bg-white/30 rounded mb-1", key: "line1"}),
+                      React.createElement('div', {className: "w-1/2 h-2 bg-white/20 rounded", key: "line2"})
+                    ]),
+                    React.createElement('div', {className: "bg-green-500/30 rounded-lg p-3 ml-8", key: "msg2"}, [
+                      React.createElement('div', {className: "w-2/3 h-2 bg-white/40 rounded mb-1", key: "line3"}),
+                      React.createElement('div', {className: "w-1/3 h-2 bg-white/25 rounded", key: "line4"})
+                    ])
+                  ]),
+                  React.createElement('div', {className: "absolute inset-0 flex items-center justify-center", key: "icon"}, 
+                    React.createElement(Bot, {className: "w-16 h-16 text-white/60"})
+                  )
+                ])
+              ),
+              dashboard: (
+                React.createElement('div', {className: "w-full h-full bg-gradient-to-br from-blue-600 to-purple-700 relative overflow-hidden"}, [
+                  React.createElement('div', {className: "absolute inset-0 bg-black/20", key: "bg"}),
+                  React.createElement('div', {className: "absolute top-4 left-4 right-4 h-8 bg-white/10 rounded flex items-center px-3", key: "header"}, [
+                    React.createElement('div', {className: "w-16 h-4 bg-white/20 rounded mr-auto", key: "logo"}),
+                    React.createElement('div', {className: "w-4 h-4 bg-white/15 rounded-full mr-2", key: "btn1"}),
+                    React.createElement('div', {className: "w-4 h-4 bg-white/15 rounded-full", key: "btn2"})
+                  ]),
+                  React.createElement('div', {className: "absolute top-16 left-4 right-4 bottom-4", key: "content"}, [
+                    React.createElement('div', {className: "grid grid-cols-3 gap-2 mb-4", key: "cards"}, [
+                      React.createElement('div', {className: "bg-white/10 rounded p-2", key: "card1"}, [
+                        React.createElement('div', {className: "w-full h-2 bg-cyan-400/60 rounded mb-1", key: "bar1"}),
+                        React.createElement('div', {className: "w-1/2 h-1 bg-white/30 rounded", key: "text1"})
+                      ]),
+                      React.createElement('div', {className: "bg-white/10 rounded p-2", key: "card2"}, [
+                        React.createElement('div', {className: "w-full h-2 bg-green-400/60 rounded mb-1", key: "bar2"}),
+                        React.createElement('div', {className: "w-2/3 h-1 bg-white/30 rounded", key: "text2"})
+                      ]),
+                      React.createElement('div', {className: "bg-white/10 rounded p-2", key: "card3"}, [
+                        React.createElement('div', {className: "w-full h-2 bg-orange-400/60 rounded mb-1", key: "bar3"}),
+                        React.createElement('div', {className: "w-1/3 h-1 bg-white/30 rounded", key: "text3"})
+                      ])
+                    ]),
+                    React.createElement('div', {className: "bg-white/10 rounded h-20 flex items-end p-2", key: "chart"}, 
+                      [...Array(8)].map((_, i) => 
+                        React.createElement('div', {
+                          key: i, 
+                          className: "w-4 bg-blue-400/60 rounded-t mr-1",
+                          style: {height: `${Math.random() * 60 + 20}%`}
+                        })
+                      )
+                    )
+                  ]),
+                  React.createElement('div', {className: "absolute inset-0 flex items-center justify-center", key: "icon"}, 
+                    React.createElement(Globe, {className: "w-16 h-16 text-white/40"})
+                  )
+                ])
+              ),
+              appointment: (
+                React.createElement('div', {className: "w-full h-full bg-gradient-to-br from-purple-600 to-pink-700 relative overflow-hidden"}, [
+                  React.createElement('div', {className: "absolute inset-0 bg-black/20", key: "bg"}),
+                  React.createElement('div', {className: "absolute top-4 left-4 right-4", key: "calendar"}, [
+                    React.createElement('div', {className: "grid grid-cols-7 gap-1 mb-2", key: "days"}, 
+                      ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].map((day, i) => 
+                        React.createElement('div', {key: i, className: "text-xs text-white/60 text-center"}, day)
+                      )
+                    ),
+                    React.createElement('div', {className: "grid grid-cols-7 gap-1", key: "dates"}, 
+                      [...Array(21)].map((_, i) => 
+                        React.createElement('div', {
+                          key: i, 
+                          className: `w-6 h-6 rounded text-xs flex items-center justify-center ${
+                            i === 10 ? 'bg-purple-400/80 text-white' : 
+                            i === 15 ? 'bg-pink-400/60 text-white' :
+                            'bg-white/10 text-white/40'
+                          }`
+                        }, i + 1)
+                      )
+                    )
+                  ]),
+                  React.createElement('div', {className: "absolute bottom-4 left-4 right-4", key: "events"}, [
+                    React.createElement('div', {className: "bg-white/15 rounded p-2 mb-1", key: "event1"}, 
+                      React.createElement('div', {className: "flex items-center"}, [
+                        React.createElement('div', {className: "w-2 h-2 bg-green-400 rounded-full mr-2", key: "dot1"}),
+                        React.createElement('div', {className: "w-16 h-2 bg-white/30 rounded", key: "text1"})
+                      ])
+                    ),
+                    React.createElement('div', {className: "bg-white/15 rounded p-2", key: "event2"}, 
+                      React.createElement('div', {className: "flex items-center"}, [
+                        React.createElement('div', {className: "w-2 h-2 bg-blue-400 rounded-full mr-2", key: "dot2"}),
+                        React.createElement('div', {className: "w-20 h-2 bg-white/30 rounded", key: "text2"})
+                      ])
+                    )
+                  ]),
+                  React.createElement('div', {className: "absolute inset-0 flex items-center justify-center", key: "icon"}, 
+                    React.createElement(Code, {className: "w-16 h-16 text-white/40"})
+                  )
+                ])
+              )
+            };
+            
+            return placeholders[type] || placeholders.dashboard;
+          };
+
+          const services = currentContent.services.items.map((service, index) => ({
+            icon: index === 0 ? React.createElement(Bot, {className: "w-8 h-8"}) : 
+                  index === 1 ? React.createElement(Globe, {className: "w-8 h-8"}) : 
+                  React.createElement(Code, {className: "w-8 h-8"}),
+            title: service.title,
+            description: service.description,
+            features: service.features
+          }));
+
+          const projects = currentContent.portfolio.projects.map((project, index) => ({
+            ...project,
+            image: project.image || `placeholder-${project.placeholder}`
+          }));
+
+          useEffect(() => {
+            if (isLoading) {
+              let currentMessage = 0;
+              const progressInterval = setInterval(() => {
+                setLoadingProgress(prev => {
+                  const newProgress = prev + Math.random() * 8 + 2;
+                  
+                  const messageIndex = Math.floor((newProgress / 100) * currentLoadingMessages.length);
+                  if (messageIndex < currentLoadingMessages.length && messageIndex !== currentMessage) {
+                    setLoadingText(currentLoadingMessages[messageIndex]);
+                    currentMessage = messageIndex;
+                  }
+                  
+                  if (newProgress >= 100) {
+                    clearInterval(progressInterval);
+                    setTimeout(() => {
+                      setIsLoading(false);
+                    }, 1200);
+                    return 100;
+                  }
+                  
+                  return newProgress;
+                });
+              }, 150);
+              
+              setLoadingText(currentLoadingMessages[0]);
+              
+              return () => clearInterval(progressInterval);
+            }
+          }, [isLoading]);
+
+          useEffect(() => {
+            const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  setIsVisible(prev => ({
+                    ...prev,
+                    [entry.target.id]: entry.isIntersecting
+                  }));
+                });
+              },
+              { threshold: 0.1 }
+            );
+
+            document.querySelectorAll('section[id]').forEach((section) => {
+              observer.observe(section);
+            });
+
+            return () => observer.disconnect();
+          }, []);
+
+          return React.createElement('div', {className: "min-h-screen bg-black text-white relative overflow-hidden"}, [
+            React.createElement(SEOHead, {language: language, key: "seo"}),
+            
+            // Permanent Matrix Background
+            React.createElement('div', {className: "fixed inset-0 z-0 opacity-5", key: "matrix"}, 
+              [...Array(30)].map((_, i) => 
+                React.createElement('div', {
+                  key: i,
+                  className: "absolute top-0 text-green-400 font-mono text-xs leading-none select-none",
+                  style: {
+                    left: `${i * 3.33}%`,
+                    animation: `matrixFall ${3 + Math.random() * 4}s linear infinite`,
+                    animationDelay: `${Math.random() * 5}s`
+                  }
+                }, 
+                  [...Array(50)].map((_, j) => 
+                    React.createElement('div', {key: j, className: "opacity-70"}, Math.random() > 0.5 ? '1' : '0')
+                  )
+                )
+              )
+            ),
+
+            // Loading Screen
+            isLoading && React.createElement('div', {className: "fixed inset-0 z-50 bg-black flex items-center justify-center overflow-hidden", key: "loading"}, [
+              // Background Animation
+              React.createElement('div', {className: "absolute inset-0", key: "bg-particles"}, 
+                [...Array(150)].map((_, i) => 
+                  React.createElement('div', {
+                    key: i,
+                    className: "absolute w-0.5 h-0.5 bg-green-400 rounded-full animate-pulse",
+                    style: {
+                      left: `${Math.random() * 100}%`,
+                      top: `${Math.random() * 100}%`,
+                      animationDelay: `${Math.random() * 3}s`,
+                      animationDuration: `${1 + Math.random() * 2}s`
+                    }
+                  })
+                )
+              ),
+              
+              // Enhanced Matrix Rain Effect
+              React.createElement('div', {className: "absolute inset-0 opacity-30", key: "matrix-loading"}, 
+                [...Array(40)].map((_, i) => 
+                  React.createElement('div', {
+                    key: i,
+                    className: "absolute top-0 text-green-400 font-mono text-sm leading-none",
+                    style: {
+                      left: `${i * 2.5}%`,
+                      animation: `matrixFall ${2 + Math.random() * 2}s linear infinite`,
+                      animationDelay: `${Math.random() * 2}s`
+                    }
+                  }, 
+                    [...Array(20)].map((_, j) => 
+                      React.createElement('div', {
+                        key: j,
+                        className: "mb-1 opacity-80",
+                        style: {animationDelay: `${j * 0.1}s`}
+                      }, Math.random() > 0.5 ? '1' : '0')
+                    )
+                  )
+                )
+              ),
+              
+              React.createElement('div', {className: "relative z-10 text-center max-w-md mx-auto px-8", key: "loading-content"}, [
+                // Logo Animation
+                React.createElement('div', {className: "mb-8", key: "logo"}, [
+                  React.createElement('div', {className: "relative", key: "logo-wrapper"}, [
+                    React.createElement('div', {className: "text-6xl font-bold mb-4 overflow-hidden font-mono", key: "name"}, 
+                      React.createElement('span', {
+                        className: "inline-block bg-gradient-to-r from-green-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent animate-pulse",
+                        style: {animation: 'typing 2s steps(10) infinite alternate, pulse 2s infinite'}
+                      }, 'MIQUEIAS M')
+                    ),
+                    
+                    // Animated Brackets
+                    React.createElement('div', {className: "flex justify-center items-center space-x-4 mb-6", key: "brackets"}, [
+                      React.createElement('span', {className: "text-green-400 text-2xl animate-bounce font-mono", key: "bracket-left"}, '['),
+                      React.createElement('div', {className: "flex space-x-1", key: "dev-text"}, 
+                        ['H', 'A', 'C', 'K', 'E', 'R', '_', 'D', 'E', 'V'].map((letter, index) => 
+                          React.createElement('span', {
+                            key: index,
+                            className: "text-green-400 font-mono text-lg",
+                            style: {animation: `fadeIn 0.3s ${index * 0.15}s both`}
+                          }, letter)
+                        )
+                      ),
+                      React.createElement('span', {
+                        className: "text-green-400 text-2xl animate-bounce font-mono", 
+                        style: {animationDelay: '0.5s'},
+                        key: "bracket-right"
+                      }, ']')
+                    ])
+                  ])
+                ]),
+                
+                // Progress Bar
+                React.createElement('div', {className: "mb-6", key: "progress"}, [
+                  React.createElement('div', {className: "flex items-center justify-between mb-2", key: "progress-header"}, [
+                    React.createElement('span', {className: "text-sm text-gray-500 font-mono"}, 'root@miqueias:~$ loading...'),
+                    React.createElement('span', {className: "text-sm text-green-400 font-mono"}, `${Math.round(loadingProgress)}%`)
+                  ]),
+                  
+                  React.createElement('div', {className: "w-full bg-gray-900 rounded-none h-3 overflow-hidden border border-green-400/30", key: "progress-bar"}, 
+                    React.createElement('div', {
+                      className: "h-full bg-gradient-to-r from-green-500 via-cyan-500 to-blue-500 transition-all duration-200 ease-out relative overflow-hidden",
+                      style: {width: `${loadingProgress}%`}
+                    }, 
+                      React.createElement('div', {className: "absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"})
+                    )
+                  )
+                ]),
+                
+                // Loading Text
+                React.createElement('div', {className: "mb-8", key: "loading-text"}, 
+                  React.createElement('div', {className: "flex items-center justify-center space-x-2"}, [
+                    React.createElement('div', {className: "w-2 h-2 bg-green-400 rounded-full animate-pulse", key: "dot"}),
+                    React.createElement('span', {
+                      className: "text-green-400 font-mono text-sm",
+                      key: loadingText,
+                      style: {animation: 'typewriter 0.5s steps(20) both'}
+                    }, loadingText),
+                    React.createElement('div', {className: "w-0.5 h-4 bg-green-400 animate-pulse", key: "cursor"})
+                  ])
+                ),
+                
+                // System Info
+                React.createElement('div', {className: "text-left bg-black/80 rounded-none p-4 font-mono text-xs text-green-400 border border-green-400/30", key: "system-info"}, [
+                  React.createElement('div', {className: "mb-1 text-cyan-400"}, '┌─ SISTEMA IA v3.0 ─────────────────────┐'),
+                  React.createElement('div', {className: "mb-1"}, ['│ Status: ', React.createElement('span', {className: "text-green-400 animate-pulse", key: "status"}, '●'), ' ONLINE']),
+                  React.createElement('div', {className: "mb-1"}, '│ CPU: Intel i9 @ 3.2GHz'),
+                  React.createElement('div', {className: "mb-1"}, '│ RAM: 32GB DDR4'),
+                  React.createElement('div', {className: "mb-1"}, '│ GPU: NVIDIA RTX 4090'),
+                  React.createElement('div', {className: "mb-1"}, '│ Stack: React, Node.js, OpenAI, MongoDB'),
+                  React.createElement('div', {className: "mb-1"}, ['│ Location: ', React.createElement('span', {className: "text-cyan-400", key: "location"}, 'BR-SP')]),
+                  React.createElement('div', {className: "mb-1"}, ['│ Uptime: ', React.createElement('span', {className: "text-green-400", key: "uptime"}, '99.9%')]),
+                  React.createElement('div', {className: "text-cyan-400"}, '└───────────────────────────────────────┘')
+                ]),
+                
+                // Animated Binary
+                React.createElement('div', {className: "flex justify-center space-x-1 mt-6", key: "binary"}, 
+                  ['1', '0', '1', '0', '1'].map((bit, i) => 
+                    React.createElement('div', {
+                      key: i,
+                      className: "text-green-400 font-mono animate-pulse",
+                      style: {
+                        animationDelay: `${i * 0.2}s`,
+                        animationDuration: '1s'
+                      }
+                    }, bit)
+                  )
+                )
+              ])
+            ]),
+
+            // Main Content with all sections would continue here...
+            // Due to space constraints, I'm providing the complete structure above
+            // The rest follows the same pattern with React.createElement
+
+            // Main Content
+            React.createElement('div', {className: `transition-all duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'} relative z-10`, key: "main-content"}, [
+              
+              // Navigation
+              React.createElement('nav', {className: "fixed top-0 w-full bg-black/90 backdrop-blur-md z-50 border-b border-green-400/30", key: "nav"}, 
+                React.createElement('div', {className: "max-w-7xl mx-auto px-6 py-4"}, 
+                  React.createElement('div', {className: "flex justify-between items-center"}, [
+                    React.createElement('div', {className: "text-2xl font-bold font-mono bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent", key: "logo"}, '[MIQUEIAS_M]'),
+                    
+                    React.createElement('div', {className: "flex items-center space-x-8", key: "nav-items"}, [
+                      // Language Toggle
+                      React.createElement('div', {className: "flex items-center space-x-2", key: "lang-toggle"}, [
+                        React.createElement('button', {
+                          onClick: () => setLanguage('en'),
+                          className: `px-3 py-1 rounded-none text-sm font-mono border transition-colors ${
+                            language === 'en' 
+                              ? 'bg-green-600/20 border-green-400 text-green-400' 
+                              : 'border-gray-600 text-gray-400 hover:border-green-400/50 hover:text-green-400'
+                          }`,
+                          key: "en-btn"
+                        }, 'EN'),
+                        React.createElement('span', {className: "text-gray-600", key: "separator"}, '|'),
+                        React.createElement('button', {
+                          onClick: () => setLanguage('pt'),
+                          className: `px-3 py-1 rounded-none text-sm font-mono border transition-colors ${
+                            language === 'pt' 
+                              ? 'bg-green-600/20 border-green-400 text-green-400' 
+                              : 'border-gray-600 text-gray-400 hover:border-green-400/50 hover:text-green-400'
+                          }`,
+                          key: "pt-btn"
+                        }, 'PT')
+                      ]),
+                      
+                      // Navigation Menu
+                      React.createElement('div', {className: "hidden md:flex space-x-6", key: "nav-menu"}, 
+                        currentContent.nav.map((item, index) => 
+                          React.createElement('button', {
+                            key: item,
+                            onClick: () => {
+                              setActiveSection(index);
+                              const sections = ['hero', 'about', 'services', 'portfolio', 'contact'];
+                              const element = document.getElementById(sections[index]);
+                              if (element) {
+                                element.scrollIntoView({ behavior: 'smooth' });
+                              }
+                            },
+                            className: `hover:text-green-400 transition-colors font-mono text-sm ${
+                              activeSection === index ? 'text-green-400' : 'text-gray-400'
+                            }`
+                          }, `/${item.toLowerCase()}`)
+                        )
+                      )
+                    ])
+                  ])
+                )
+              ),
+
+              // Hero Section
+              React.createElement('section', {id: "hero", className: "min-h-screen flex items-center relative overflow-hidden", key: "hero"}, [
+                React.createElement('div', {className: "absolute inset-0 bg-gradient-to-br from-green-900/10 to-cyan-900/10", key: "hero-bg"}),
+                
+                React.createElement('div', {className: "max-w-7xl mx-auto px-6 relative z-10", key: "hero-content"}, 
+                  React.createElement('div', {className: `transition-all duration-1000 ${isVisible.hero ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}, [
+                    React.createElement('div', {className: "mb-6", key: "subtitle"}, 
+                      React.createElement('span', {className: "inline-block px-4 py-2 bg-green-600/20 border border-green-500/30 rounded-none text-green-300 text-sm font-mono"}, 
+                        currentContent.hero.subtitle
+                      )
+                    ),
+                    
+                    React.createElement('h1', {className: "text-6xl md:text-8xl font-bold mb-6 leading-tight font-mono", key: "title"}, [
+                      React.createElement('span', {className: "text-gray-100", key: "title1"}, currentContent.hero.title[0]),
+                      React.createElement('span', {className: "block bg-gradient-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent", key: "title2"}, 
+                        currentContent.hero.title[1]
+                      ),
+                      React.createElement('span', {className: "block text-gray-100", key: "title3"}, currentContent.hero.title[2])
+                    ]),
+                    
+                    React.createElement('p', {className: "text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl leading-relaxed font-mono", key: "description"}, 
+                      currentContent.hero.description
+                    ),
+                    
+                    React.createElement('div', {className: "flex flex-col sm:flex-row gap-4 mb-12", key: "hero-buttons"}, [
+                      React.createElement('button', {
+                        onClick: () => {
+                          const portfolioSection = document.getElementById('portfolio');
+                          if (portfolioSection) {
+                            portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        },
+                        className: "group px-8 py-4 bg-gradient-to-r from-green-600 to-cyan-600 rounded-none font-mono font-semibold hover:from-green-500 hover:to-cyan-500 transition-all duration-300 flex items-center justify-center border border-green-400/30",
+                        key: "portfolio-btn"
+                      }, [
+                        currentContent.hero.buttons[0],
+                        React.createElement(ArrowRight, {className: "ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"})
+                      ]),
+                      React.createElement('button', {
+                        onClick: () => {
+                          const contactSection = document.getElementById('contact');
+                          if (contactSection) {
+                            contactSection.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        },
+                        className: "px-8 py-4 border border-green-600 rounded-none font-mono font-semibold hover:bg-green-900/20 transition-all duration-300",
+                        key: "contact-btn"
+                      }, currentContent.hero.buttons[1])
+                    ]),
+                    
+                    React.createElement('div', {className: "grid grid-cols-3 gap-8 max-w-2xl", key: "stats"}, 
+                      currentContent.hero.stats.map((stat, index) => 
+                        React.createElement('div', {key: index, className: "text-center border border-green-400/20 p-4 bg-black/30"}, [
+                          React.createElement('div', {className: "text-3xl font-bold text-green-400 font-mono", key: "value"}, stat.value),
+                          React.createElement('div', {className: "text-gray-400 font-mono text-sm", key: "label"}, stat.label)
+                        ])
+                      )
+                    )
+                  ])
+                ),
+                
+                React.createElement('div', {className: "absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce", key: "scroll-indicator"}, 
+                  React.createElement(ChevronDown, {className: "w-6 h-6 text-green-400"})
+                )
+              ]),
+
+              // About Section
+              React.createElement('section', {id: "about", className: "py-20 bg-gray-900/50 border-t border-green-400/20", key: "about"}, 
+                React.createElement('div', {className: "max-w-7xl mx-auto px-6"}, 
+                  React.createElement('div', {className: `transition-all duration-1000 ${isVisible.about ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}, [
+                    React.createElement('h2', {className: "text-4xl md:text-5xl font-bold mb-12 text-center font-mono", key: "about-title"}, [
+                      React.createElement('span', {className: "text-gray-300", key: "bracket1"}, '['),
+                      React.createElement('span', {className: "bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent", key: "title"}, 
+                        currentContent.about.title.slice(1, -1)
+                      ),
+                      React.createElement('span', {className: "text-gray-300", key: "bracket2"}, ']')
+                    ]),
+                    
+                    React.createElement('div', {className: "grid md:grid-cols-2 gap-12 items-center", key: "about-content"}, [
+                      React.createElement('div', {key: "about-text"}, [
+                        ...currentContent.about.paragraphs.map((paragraph, index) => 
+                          React.createElement('p', {key: index, className: "text-lg text-gray-300 mb-6 leading-relaxed font-mono"}, paragraph)
+                        ),
+                        
+                        React.createElement('div', {className: "grid grid-cols-2 gap-6", key: "skills"}, 
+                          currentContent.about.skills.map((skill, index) => {
+                            const colors = ['green-400/20', 'cyan-400/20', 'blue-400/20', 'purple-400/20'];
+                            const textColors = ['green-400', 'cyan-400', 'blue-400', 'purple-400'];
+                            return React.createElement('div', {key: index, className: `space-y-2 bg-black/30 p-4 border border-${colors[index]}`}, [
+                              React.createElement('h4', {className: `font-semibold text-${textColors[index]} font-mono`, key: "skill-title"}, skill.title),
+                              React.createElement('p', {className: "text-gray-300 font-mono text-sm", key: "skill-content"}, skill.content)
+                            ]);
+                          })
+                        )
+                      ]),
+                      
+                      React.createElement('div', {className: "relative", key: "about-card"}, 
+                        React.createElement('div', {className: "w-full h-96 bg-gradient-to-br from-green-600/20 to-cyan-600/20 rounded-none p-8 flex items-center justify-center border border-green-400/30"}, 
+                          React.createElement('div', {className: "text-center"}, [
+                            React.createElement('div', {className: "w-24 h-24 bg-black border-2 border-green-400 rounded-none flex items-center justify-center mb-6 mx-auto", key: "icon"}, 
+                              React.createElement(Code, {className: "w-12 h-12 text-green-400"})
+                            ),
+                            React.createElement('h3', {className: "text-2xl font-bold mb-4 font-mono text-green-400", key: "card-title"}, 
+                              currentContent.about.card.title
+                            ),
+                            React.createElement('p', {
+                              className: "text-gray-300 font-mono text-sm", 
+                              dangerouslySetInnerHTML: {__html: currentContent.about.card.subtitle.replace(/\n/g, '<br/>')},
+                              key: "card-subtitle"
+                            })
+                          ])
+                        )
+                      )
+                    ])
+                  ])
+                )
+              ),
+
+              // Services Section
+              React.createElement('section', {id: "services", className: "py-20 border-t border-green-400/20", key: "services"}, 
+                React.createElement('div', {className: "max-w-7xl mx-auto px-6"}, 
+                  React.createElement('div', {className: `transition-all duration-1000 ${isVisible.services ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}, [
+                    React.createElement('h2', {className: "text-4xl md:text-5xl font-bold mb-4 text-center font-mono", key: "services-title"}, [
+                      React.createElement('span', {className: "text-gray-300", key: "bracket1"}, '['),
+                      React.createElement('span', {className: "bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent", key: "title"}, 
+                        currentContent.services.title.slice(1, -1)
+                      ),
+                      React.createElement('span', {className: "text-gray-300", key: "bracket2"}, ']')
+                    ]),
+                    React.createElement('p', {className: "text-xl text-gray-400 text-center mb-16 max-w-3xl mx-auto font-mono", key: "services-subtitle"}, 
+                      currentContent.services.subtitle
+                    ),
+                    
+                    React.createElement('div', {className: "grid md:grid-cols-3 gap-8", key: "services-grid"}, 
+                      services.map((service, index) => 
+                        React.createElement('div', {
+                          key: index,
+                          className: "group bg-black/50 p-8 rounded-none border border-green-400/30 hover:border-green-400 transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-lg hover:shadow-green-400/20"
+                        }, [
+                          React.createElement('div', {className: "w-16 h-16 bg-gradient-to-br from-green-600/20 to-cyan-600/20 border border-green-400/50 rounded-none flex items-center justify-center mb-6 group-hover:border-green-400 transition-all duration-300", key: "service-icon"}, 
+                            service.icon
+                          ),
+                          
+                          React.createElement('h3', {className: "text-2xl font-bold mb-4 group-hover:text-green-400 transition-colors font-mono", key: "service-title"}, 
+                            service.title
+                          ),
+                          
+                          React.createElement('p', {className: "text-gray-300 mb-6 leading-relaxed font-mono text-sm", key: "service-description"}, 
+                            `> ${service.description}`
+                          ),
+                          
+                          React.createElement('div', {className: "space-y-2", key: "service-features"}, 
+                            service.features.map((feature, featureIndex) => 
+                              React.createElement('div', {key: featureIndex, className: "flex items-center text-sm text-gray-400 font-mono"}, [
+                                React.createElement(CheckCircle, {className: "w-4 h-4 text-green-400 mr-2 flex-shrink-0"}),
+                                `[${feature.replace(/\s/g, '_').toLowerCase()}]`
+                              ])
+                            )
+                          ),
+                          
+                          React.createElement('button', {className: "mt-6 text-green-400 font-mono flex items-center group-hover:text-cyan-400 transition-colors", key: "service-button"}, [
+                            './execute_info',
+                            React.createElement(ArrowRight, {className: "ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"})
+                          ])
+                        ])
+                      )
+                    )
+                  ])
+                )
+              ),
+
+              // Portfolio Section
+              React.createElement('section', {id: "portfolio", className: "py-20 bg-gray-900/50 border-t border-green-400/20", key: "portfolio"}, 
+                React.createElement('div', {className: "max-w-7xl mx-auto px-6"}, 
+                  React.createElement('div', {className: `transition-all duration-1000 ${isVisible.portfolio ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}, [
+                    React.createElement('h2', {className: "text-4xl md:text-5xl font-bold mb-4 text-center font-mono", key: "portfolio-title"}, [
+                      React.createElement('span', {className: "text-gray-300", key: "bracket1"}, '['),
+                      React.createElement('span', {className: "bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent", key: "title"}, 
+                        currentContent.portfolio.title.slice(1, -1)
+                      ),
+                      React.createElement('span', {className: "text-gray-300", key: "bracket2"}, ']')
+                    ]),
+                    React.createElement('p', {className: "text-xl text-gray-400 text-center mb-16 max-w-3xl mx-auto font-mono", key: "portfolio-subtitle"}, 
+                      currentContent.portfolio.subtitle
+                    ),
+                    
+                    React.createElement('div', {className: "grid md:grid-cols-2 lg:grid-cols-3 gap-8", key: "portfolio-grid"}, 
+                      projects.map((project, index) => 
+                        React.createElement('div', {
+                          key: index,
+                          className: "group bg-black/70 rounded-none overflow-hidden border border-green-400/30 hover:border-green-400 transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-lg hover:shadow-green-400/20"
+                        }, [
+                          React.createElement('div', {className: "h-48 relative overflow-hidden", key: "project-image"}, [
+                            project.image && project.image.startsWith('/images/') ? 
+                              React.createElement('img', {
+                                src: project.image, 
+                                alt: project.title,
+                                className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-500",
+                                onError: (e) => {
+                                  e.target.style.display = 'none';
+                                  e.target.nextElementSibling.style.display = 'block';
+                                }
+                              }) : null,
+                            React.createElement('div', {
+                              className: "w-full h-full",
+                              style: {display: project.image && project.image.startsWith('/images/') ? 'none' : 'block'}
+                            }, createProjectPlaceholder(project.placeholder, project.category)),
+                            React.createElement('div', {className: "absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100", key: "project-overlay"}, 
+                              React.createElement('div', {className: "w-16 h-16 bg-black/60 border border-green-400 rounded-none flex items-center justify-center"}, 
+                                project.category === 'Chatbot' ? React.createElement(Bot, {className: "w-8 h-8 text-green-400"}) :
+                                project.category === 'Software' ? React.createElement(Code, {className: "w-8 h-8 text-cyan-400"}) :
+                                React.createElement(Globe, {className: "w-8 h-8 text-blue-400"})
+                              )
+                            )
+                          ]),
+                          
+                          React.createElement('div', {className: "p-6", key: "project-content"}, [
+                            React.createElement('div', {className: "flex items-center justify-between mb-3", key: "project-header"}, [
+                              React.createElement('span', {className: "px-3 py-1 bg-green-600/20 text-green-300 text-sm rounded-none border border-green-400/30 font-mono"}, 
+                                `/${project.category.toLowerCase()}`
+                              ),
+                              React.createElement('span', {className: "text-green-400 text-sm font-mono"}, project.metrics)
+                            ]),
+                            
+                            React.createElement('h3', {className: "text-xl font-bold mb-3 group-hover:text-green-400 transition-colors font-mono", key: "project-title"}, 
+                              project.title.replace(/\s/g, '_').toUpperCase()
+                            ),
+                            
+                            React.createElement('p', {className: "text-gray-300 mb-4 text-sm leading-relaxed font-mono", key: "project-description"}, 
+                              `> ${project.description}`
+                            ),
+                            
+                            React.createElement('div', {className: "flex flex-wrap gap-2 mb-4", key: "project-tech"}, 
+                              project.tech.map((tech, techIndex) => 
+                                React.createElement('span', {
+                                  key: techIndex,
+                                  className: "px-2 py-1 bg-black border border-gray-600 text-gray-300 text-xs font-mono"
+                                }, tech)
+                              )
+                            ),
+                            
+                            React.createElement('div', {className: "flex space-x-2", key: "project-buttons"}, [
+                              project.demoUrl && project.demoUrl !== '#' && 
+                                React.createElement('a', {
+                                  href: project.demoUrl,
+                                  target: "_blank",
+                                  rel: "noopener noreferrer",
+                                  className: "flex-1 text-center py-2 bg-green-600/20 border border-green-400/50 text-green-400 font-mono text-xs hover:bg-green-600/30 transition-colors"
+                                }, '[DEMO]'),
+                              project.codeUrl && project.codeUrl !== '#' && 
+                                React.createElement('a', {
+                                  href: project.codeUrl,
+                                  target: "_blank",
+                                  rel: "noopener noreferrer",
+                                  className: "flex-1 text-center py-2 bg-cyan-600/20 border border-cyan-400/50 text-cyan-400 font-mono text-xs hover:bg-cyan-600/30 transition-colors"
+                                }, '[CODE]'),
+                              (!project.demoUrl || project.demoUrl === '#') && (!project.codeUrl || project.codeUrl === '#') && 
+                                React.createElement('button', {className: "w-full text-green-400 font-mono flex items-center justify-center text-sm group-hover:text-cyan-400 transition-colors py-2"}, [
+                                  './contact_for_details',
+                                  React.createElement(ArrowRight, {className: "ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"})
+                                ])
+                            ])
+                          ])
+                        ])
+                      )
+                    ),
+                    
+                    React.createElement('div', {className: "text-center mt-12", key: "portfolio-cta"}, 
+                      React.createElement('button', {className: "px-8 py-4 bg-gradient-to-r from-green-600/80 to-cyan-600/80 rounded-none font-mono font-semibold hover:from-green-500 hover:to-cyan-500 transition-all duration-300 border border-green-400/50"}, 
+                        currentContent.portfolio.button
+                      )
+                    )
+                  ])
+                )
+              ),
+
+              // Contact Section
+              React.createElement('section', {id: "contact", className: "py-20 border-t border-green-400/20", key: "contact"}, 
+                React.createElement('div', {className: "max-w-7xl mx-auto px-6"}, 
+                  React.createElement('div', {className: `transition-all duration-1000 ${isVisible.contact ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}, [
+                    React.createElement('h2', {className: "text-4xl md:text-5xl font-bold mb-4 text-center font-mono", key: "contact-title"}, [
+                      React.createElement('span', {className: "text-gray-300", key: "bracket1"}, '['),
+                      React.createElement('span', {className: "bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent", key: "title"}, 
+                        currentContent.contact.title.slice(1, -1)
+                      ),
+                      React.createElement('span', {className: "text-gray-300", key: "bracket2"}, ']')
+                    ]),
+                    React.createElement('p', {className: "text-xl text-gray-400 text-center mb-16 max-w-3xl mx-auto font-mono", key: "contact-subtitle"}, 
+                      currentContent.contact.subtitle
+                    ),
+                    
+                    React.createElement('div', {className: "grid md:grid-cols-2 gap-12", key: "contact-content"}, [
+                      React.createElement('div', {key: "contact-info"}, [
+                        React.createElement('h3', {className: "text-2xl font-bold mb-6 font-mono text-green-400", key: "contact-info-title"}, 
+                          currentContent.contact.form.title
+                        ),
+                        
+                        React.createElement('div', {className: "space-y-6", key: "contact-fields"}, 
+                          currentContent.contact.form.fields.map((field, index) => {
+                            const icons = [Mail, Smartphone, Users];
+                            const colors = ['green-400/30', 'cyan-400/30', 'blue-400/30'];
+                            const iconColors = ['green-400', 'cyan-400', 'blue-400'];
+                            const IconComponent = icons[index];
+                            
+                            const ContactItem = ({ children }) => {
+                              if (field.link) {
+                                return React.createElement('a', {
+                                  href: field.link,
+                                  target: field.link.startsWith('mailto:') ? '_self' : '_blank',
+                                  rel: "noopener noreferrer",
+                                  className: "block hover:scale-105 transition-transform duration-300"
+                                }, children);
+                              }
+                              return React.createElement('div', {}, children);
+                            };
+                            
+                            return React.createElement(ContactItem, {key: index}, 
+                              React.createElement('div', {className: `flex items-center bg-black/30 p-4 border border-${colors[index]} hover:border-${iconColors[index]} transition-colors duration-300 cursor-${field.link ? 'pointer' : 'default'}`}, [
+                                React.createElement('div', {className: `w-12 h-12 bg-${iconColors[index].split('-')[0]}-600/20 border border-${colors[index]} rounded-none flex items-center justify-center mr-4`, key: "icon"}, 
+                                  React.createElement(IconComponent, {className: `w-6 h-6 text-${iconColors[index]}`})
+                                ),
+                                React.createElement('div', {key: "info"}, [
+                                  React.createElement('p', {className: "text-gray-400 font-mono text-sm", key: "label"}, field.label),
+                                  React.createElement('p', {className: `text-white font-mono ${field.link ? 'hover:text-green-400 transition-colors' : ''}`, key: "value"}, field.value)
+                                ])
+                              ])
+                            );
+                          })
+                        ),
+                        
+                        React.createElement('div', {className: "flex space-x-4 mt-8", key: "social-links"}, [
+                          React.createElement('a', {
+                            href: "https://github.com/miqueiasdev",
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            className: "w-12 h-12 bg-black border border-gray-600 rounded-none flex items-center justify-center hover:border-green-400 hover:bg-green-900/20 transition-colors group"
+                          }, React.createElement(Github, {className: "w-6 h-6 group-hover:scale-110 transition-transform"})),
+                          React.createElement('a', {
+                            href: "https://linkedin.com/in/miqueiasdev",
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            className: "w-12 h-12 bg-black border border-gray-600 rounded-none flex items-center justify-center hover:border-cyan-400 hover:bg-cyan-900/20 transition-colors group"
+                          }, React.createElement(Linkedin, {className: "w-6 h-6 group-hover:scale-110 transition-transform"})),
+                          React.createElement('a', {
+                            href: "https://wa.me/5573998065048?text=Olá! Vi seu portfólio e gostaria de conversar sobre um projeto.",
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            className: "w-12 h-12 bg-black border border-gray-600 rounded-none flex items-center justify-center hover:border-blue-400 hover:bg-blue-900/20 transition-colors group"
+                          }, React.createElement(Smartphone, {className: "w-6 h-6 group-hover:scale-110 transition-transform"}))
+                        ])
+                      ]),
+                      
+                      React.createElement('div', {className: "bg-black/70 p-8 rounded-none border border-green-400/30", key: "contact-form"}, [
+                        React.createElement('h3', {className: "text-xl font-bold mb-6 font-mono text-cyan-400", key: "form-title"}, 
+                          currentContent.contact.form.quote.title
+                        ),
+                        
+                        React.createElement('form', {
+                          action: "https://formspree.io/f/xpwagkng",
+                          method: "POST",
+                          className: "space-y-4",
+                          key: "form"
+                        }, [
+                          React.createElement('input', {
+                            type: "text",
+                            name: "name",
+                            placeholder: currentContent.contact.form.quote.placeholders[0],
+                            required: true,
+                            className: "w-full px-4 py-3 bg-black border border-gray-600 rounded-none focus:border-green-500 focus:outline-none transition-colors font-mono text-sm"
+                          }),
+                          React.createElement('input', {
+                            type: "email",
+                            name: "email",
+                            placeholder: currentContent.contact.form.quote.placeholders[1],
+                            required: true,
+                            className: "w-full px-4 py-3 bg-black border border-gray-600 rounded-none focus:border-green-500 focus:outline-none transition-colors font-mono text-sm"
+                          }),
+                          React.createElement('select', {
+                            name: "project_type",
+                            className: "w-full px-4 py-3 bg-black border border-gray-600 rounded-none focus:border-green-500 focus:outline-none transition-colors font-mono text-sm"
+                          }, 
+                            currentContent.contact.form.quote.options.map((option, index) => 
+                              React.createElement('option', {key: index, value: option}, option)
+                            )
+                          ),
+                          React.createElement('textarea', {
+                            name: "message",
+                            placeholder: currentContent.contact.form.quote.placeholders[2],
+                            rows: "4",
+                            required: true,
+                            className: "w-full px-4 py-3 bg-black border border-gray-600 rounded-none focus:border-green-500 focus:outline-none transition-colors resize-none font-mono text-sm"
+                          }),
+                          
+                          React.createElement('button', {
+                            type: "submit",
+                            className: "w-full px-6 py-3 bg-gradient-to-r from-green-600/80 to-cyan-600/80 rounded-none font-mono font-semibold hover:from-green-500 hover:to-cyan-500 transition-all duration-300 border border-green-400/50"
+                          }, currentContent.contact.form.quote.button)
+                        ])
+                      ])
+                    ])
+                  ])
+                )
+              ),
+
+              // Footer
+              React.createElement('footer', {className: "py-8 border-t border-green-400/30 bg-black", key: "footer"}, 
+                React.createElement('div', {className: "max-w-7xl mx-auto px-6 text-center"}, 
+                  React.createElement('p', {
+                    className: "text-gray-400 font-mono text-sm",
+                    dangerouslySetInnerHTML: {__html: currentContent.footer.replace('<3', '&lt;3')}
+                  })
+                )
+              )
+            ]),
+
+            // CSS Animations
+            React.createElement('style', {jsx: true, key: "styles"}, `
+              @keyframes typing {
+                from { opacity: 0.4; }
+                to { opacity: 1; }
+              }
+              
+              @keyframes typewriter {
+                from { 
+                  opacity: 0;
+                  transform: translateX(-10px);
+                }
+                to { 
+                  opacity: 1;
+                  transform: translateX(0);
+                }
+              }
+              
+              @keyframes fadeIn {
+                from { 
+                  opacity: 0;
+                  transform: translateY(-10px);
+                }
+                to { 
+                  opacity: 1;
+                  transform: translateY(0);
+                }
+              }
+              
+              @keyframes shimmer {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+              }
+              
+              @keyframes matrixFall {
+                0% { 
+                  transform: translateY(-100vh);
+                  opacity: 0;
+                }
+                10% {
+                  opacity: 1;
+                }
+                90% {
+                  opacity: 1;
+                }
+                100% { 
+                  transform: translateY(100vh);
+                  opacity: 0;
+                }
+              }
+            `)
+          ]);
+        };
+
+        ReactDOM.render(React.createElement(Portfolio), document.getElementById('root'));
+    </script>
+</body>
+</html>
