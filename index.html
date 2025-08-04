@@ -23,9 +23,9 @@
     <!-- External Libraries -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js"></script>
+    <script>window.react = window.React;</script>
+    <script src="js/lucide-react.min.js"></script>
+    <link href="style.css" rel="stylesheet">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
@@ -57,9 +57,9 @@
 <body class="bg-black text-white">
     <div id="root"></div>
     
-    <script type="text/babel">
+    <script>
         const { useState, useEffect } = React;
-        const { ChevronDown, Code, Bot, Smartphone, Globe, Users, Zap, CheckCircle, ArrowRight, Github, Linkedin, Mail, Star } = lucide;
+        const { ChevronDown, Code, Bot, Smartphone, Globe, Users, Zap, CheckCircle, ArrowRight, Github, Linkedin, Mail, Star } = LucideReact;
 
         // SEO and Meta Component
         const SEOHead = ({ language }) => {
